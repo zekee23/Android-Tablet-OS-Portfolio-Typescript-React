@@ -4,10 +4,11 @@ import { useQuickSettings } from '../hooks/useQuickSettings';
 export function StatusBar() {
   const { open } = useQuickSettings();
 
-  const currentTime = new Date().toLocaleTimeString('en-US', {
+  const currentTime = new Date().toLocaleTimeString('en-PH', {
     hour: '2-digit',
     minute: '2-digit',
-    hour12: false,
+    hour12: true,
+    timeZone: 'Asia/Manila'
   });
 
   return (

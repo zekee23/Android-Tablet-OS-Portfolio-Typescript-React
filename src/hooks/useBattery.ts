@@ -11,7 +11,7 @@ export function useBattery() {
         if (prev <= 0) return 0;
         return prev - 1;
       });
-    }, 1000); // 1 second = 1000ms
+    }, 1000 * 30); //30 seconds
 
     return interval;
   }, []);
@@ -26,7 +26,7 @@ export function useBattery() {
   const chargeBattery = useCallback(() => {
     setIsCharging(true);
     setPercentage(100);
-    setTimeout(() => setIsCharging(false), 10000);
+    setTimeout(() => setIsCharging(false), 1000);
   }, []);
 
   const drainBattery = useCallback((amount: number) => {

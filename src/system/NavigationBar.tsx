@@ -22,7 +22,7 @@ export function NavigationBar() {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 h-12 bg-black bg-opacity-90 backdrop-blur flex items-center justify-around z-50">
+    <div className="fixed bottom-0 left-0 right-0 h-12 bg-black bg-opacity-90 backdrop-blur flex items-center justify-around  z-50">
       <button
         onClick={handleBack}
         className="p-2 text-white hover:bg-white hover:bg-opacity-20 rounded-full transition-colors"

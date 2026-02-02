@@ -1,4 +1,4 @@
-import { Battery, BatteryLow, BatteryMedium, BatteryFull } from 'lucide-react';
+import { BatteryLow, BatteryMedium, BatteryFull } from 'lucide-react';
 
 interface BatteryProps {
   percentage: number;
@@ -17,6 +17,7 @@ export function BatteryIcon({
   const getBatteryColor = (percent: number) => {
     if (percent <= 20) return 'text-red-500';
     if (percent <= 50) return 'text-yellow-500';
+    if(percent <=75) return 'text-green-500';
     return 'text-green-500';
   };
 
@@ -24,7 +25,7 @@ export function BatteryIcon({
   const getBatteryIcon = (percent: number) => {
     if (percent <= 20) return BatteryLow;
     if (percent <= 50) return BatteryMedium;
-    if (percent <= 80) return Battery;
+    if (percent <= 80) return BatteryMedium;
     return BatteryFull;
   };
 

@@ -19,7 +19,7 @@ export function HomeScreen({ apps }: HomeScreenProps) {
     hour12: false,
   });
 
-  const currentDate = new Date().toLocaleDateString('en-US', {
+  const currentDate = new Date().toLocaleDateString('en-PH', {
     weekday: 'short',
     month: 'short',
     day: 'numeric',
