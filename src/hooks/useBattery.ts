@@ -26,7 +26,7 @@ export function useBattery() {
   const chargeBattery = useCallback(() => {
     setIsCharging(true);
     setPercentage(100);
-    setTimeout(() => setIsCharging(false), 1000);
+    setTimeout(() => setIsCharging(false), 10000);
   }, []);
 
   const drainBattery = useCallback((amount: number) => {
