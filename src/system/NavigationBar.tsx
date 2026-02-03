@@ -9,6 +9,17 @@ export function NavigationBar() {
   };
 
   const handleBack = () => {
+    // Check if the current app has a custom back handler
+    const customBackHandler = (window as any).customBackHandler;
+    
+    if (customBackHandler && typeof customBackHandler === 'function') {
+      const handled = customBackHandler();
+      if (handled) {
+        return; // Custom handler handled the back action
+      }
+    }
+    
+    // Default OS back behavior
     if (state.taskStack.length > 1) {
       const previousApp = state.taskStack[state.taskStack.length - 2];
       actions.switchToApp(previousApp.appId);

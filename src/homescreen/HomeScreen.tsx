@@ -38,14 +38,15 @@ export function HomeScreen({ apps }: HomeScreenProps) {
         <div className="text-center text-white mb-12">
           <h1 className="text-6xl font-extralight mb-2">{currentTime}</h1>
           <p className="text-xl text-white/70 font-light">{currentDate}</p>
+          <p className="text-l text-white/70 font-light">Manila, Philippines</p>
         </div>
         
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-md pt-7">
           <AppGrid apps={apps} onAppClick={handleAppClick} />
         </div>
         
         <div className="mt-8 space-y-2">
-          <p className="text-sm text-white/70 text-center">👆 Drag down from the status bar</p>
+          <p className="text-sm text-white/70 text-center"> Drag down from the status bar</p>
           <p className="text-xs text-white/50 text-center">to open Quick Settings</p>
         </div>
       </div>

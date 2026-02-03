@@ -1,5 +1,5 @@
-import { User, Mail, Github, Linkedin } from 'lucide-react';
-
+import { User, Mail} from 'lucide-react';
+import { FaGithub,FaLinkedin } from 'react-icons/fa';
 export function AboutApp() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 pt-20 pb-16 px-4">
@@ -45,7 +45,7 @@ export function AboutApp() {
               rel="noopener noreferrer"
               className="flex items-center gap-3 text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
             >
-              <Github className="w-5 h-5" />
+              <FaGithub className="w-5 h-5" />
               <span>github.com/yourusername</span>
             </a>
             <a 
@@ -54,7 +54,7 @@ export function AboutApp() {
               rel="noopener noreferrer"
               className="flex items-center gap-3 text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
             >
-              <Linkedin className="w-5 h-5" />
+              <FaLinkedin className="w-5 h-5" />
               <span>linkedin.com/in/yourusername</span>
             </a>
           </div>

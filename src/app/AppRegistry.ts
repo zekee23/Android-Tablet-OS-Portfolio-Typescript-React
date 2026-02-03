@@ -2,6 +2,9 @@ import type { App } from './types';
 import { AboutApp } from '../apps/AboutApp';
 import { ProjectsApp } from '../apps/ProjectsApp';
 import { ContactApp } from '../apps/ContactApp';
+import {GalleryApp} from '../apps/GalleryAPp';
+import {ExperienceApp} from '../apps/ExperienceApp';
+import {TechApp} from '../apps/TechApp';
 
 export const availableApps: App[] = [
   {
@@ -18,10 +21,28 @@ export const availableApps: App[] = [
   },
   {
     id: 'contact',
-    name: 'Contact',
+    name: 'Contact Me',
     icon: '📧',
     component: ContactApp,
   },
+  {
+    id: 'gallery',
+    name: 'Gallery',
+    icon: '🖼️',
+    component: GalleryApp,
+  },
+  {
+    id: 'experience',
+    name: 'Experience',
+    icon: '📈',
+    component: ExperienceApp,
+  },
+  {
+    id: 'tech',
+    name: 'TechStack',
+    icon: '💻',
+    component: TechApp,
+  }
 ];
 
 export function getAppComponent(appId: string) {
