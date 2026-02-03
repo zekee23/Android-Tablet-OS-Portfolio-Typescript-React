@@ -2,7 +2,7 @@ import type { App } from './types';
 import { AboutApp } from '../apps/AboutApp';
 import { ProjectsApp } from '../apps/ProjectsApp';
 import { ContactApp } from '../apps/ContactApp';
-import {GalleryApp} from '../apps/GalleryAPp';
+import {GalleryApp} from '../apps/GalleryApp';
 import {ExperienceApp} from '../apps/ExperienceApp';
 import {TechApp} from '../apps/TechApp';
 
