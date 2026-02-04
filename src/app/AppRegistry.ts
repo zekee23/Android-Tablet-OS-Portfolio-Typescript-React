@@ -9,7 +9,7 @@ import {TechApp} from '../apps/TechApp';
 export const availableApps: App[] = [
   {
     id: 'about',
-    name: 'About',
+    name: 'About Me',
     icon: '👤',
     component: AboutApp,
   },

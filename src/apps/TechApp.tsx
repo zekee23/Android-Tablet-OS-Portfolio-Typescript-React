@@ -1,4 +1,6 @@
-import { Computer,Globe, Smartphone, Server, Terminal, Cloud } from 'lucide-react';
+import { Globe, Server, Terminal, Wrench, Rocket } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 interface TechCategory {
   id: string;
@@ -12,183 +14,203 @@ interface TechItem {
   name: string;
   level: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
   experience: string;
-  projects: string[];
-  description?: string;
+  logo: string;
 }
 
 const techData: TechCategory[] = [
   {
     id: 'frontend',
-    name: 'Frontend Development',
-    icon: <Globe className="w-6 h-6" />,
+    name: 'Frontend',
+    icon: <Globe className="w-5 h-5" />,
     color: 'blue',
     technologies: [
       {
         name: 'React',
         level: 'Expert',
         experience: '4+ years',
-        projects: ['Portfolio Website', 'E-commerce Platform', 'Admin Dashboard'],
-        description: 'Hooks, Context API, Redux, Next.js'
+        logo: 'https://cdn.simpleicons.org/react/61DAFB'
       },
       {
         name: 'TypeScript',
         level: 'Advanced',
         experience: '3+ years',
-        projects: ['Type-safe APIs', 'Component Libraries', 'Enterprise Apps'],
-        description: 'Advanced types, generics, decorators'
+        logo: 'https://cdn.simpleicons.org/typescript/3178C6'
       },
       {
         name: 'Tailwind CSS',
         level: 'Expert',
         experience: '3+ years',
-        projects: ['Design Systems', 'Responsive Layouts', 'Component Libraries'],
-        description: 'Custom configurations, animations, plugins'
+        logo: 'https://cdn.simpleicons.org/tailwindcss/06B6D4'
       },
       {
         name: 'Vue.js',
         level: 'Intermediate',
         experience: '2+ years',
-        projects: ['SPA Applications', 'Component Libraries'],
-        description: 'Vue 3, Composition API, Vuex'
+        logo: 'https://cdn.simpleicons.org/vuedotjs/4FC08D'
+      },
+      {
+        name: 'Next.js',
+        level: 'Advanced',
+        experience: '3+ years',
+        logo: 'https://cdn.simpleicons.org/nextdotjs/000000'
+      },
+      {
+        name: 'React Native',
+        level: 'Intermediate',
+        experience: '2+ years',
+        logo: 'https://cdn.simpleicons.org/react/61DAFB'
+      },
+      {
+        name: 'Flutter',
+        level: 'Beginner',
+        experience: '1+ year',
+        logo: 'https://cdn.simpleicons.org/flutter/02569B'
       }
     ]
   },
   {
     id: 'backend',
-    name: 'Backend Development',
-    icon: <Server className="w-6 h-6" />,
+    name: 'Backend',
+    icon: <Server className="w-5 h-5" />,
     color: 'green',
     technologies: [
       {
         name: 'Node.js',
         level: 'Advanced',
         experience: '3+ years',
-        projects: ['REST APIs', 'GraphQL Services', 'Microservices'],
-        description: 'Express, Fastify, NestJS'
+        logo: 'https://cdn.simpleicons.org/nodedotjs/339933'
       },
       {
         name: 'Python',
         level: 'Intermediate',
         experience: '2+ years',
-        projects: ['Data Processing', 'Automation Scripts', 'Web Scraping'],
-        description: 'Django, FastAPI, Flask'
+        logo: 'https://cdn.simpleicons.org/python/3776AB'
       },
       {
         name: 'PostgreSQL',
         level: 'Advanced',
         experience: '3+ years',
-        projects: ['Database Design', 'Query Optimization', 'Data Migration'],
-        description: 'Advanced queries, indexing, performance tuning'
-      }
-    ]
-  },
-  {
-    id: 'mobile',
-    name: 'Mobile Development',
-    icon: <Smartphone className="w-6 h-6" />,
-    color: 'purple',
-    technologies: [
-      {
-        name: 'React Native',
-        level: 'Intermediate',
-        experience: '2+ years',
-        projects: ['iOS Apps', 'Android Apps', 'Cross-platform Solutions'],
-        description: 'Native modules, navigation, state management'
+        logo: 'https://cdn.simpleicons.org/postgresql/4169E1'
       },
       {
-        name: 'Flutter',
+        name: 'Java',
+        level: 'Advanced',
+        experience: '3+ years',
+        logo: 'https://cdn.simpleicons.org/openjdk/000000'
+      },
+      {
+        name: 'C++',
+        level: 'Intermediate',
+        experience: '2+ years',
+        logo: 'https://cdn.simpleicons.org/cplusplus/00599C'
+      },
+      {
+        name: 'C#',
         level: 'Beginner',
         experience: '1+ year',
-        projects: ['Mobile Prototypes', 'Simple Apps'],
-        description: 'Widgets, state management, packages'
-      }
-    ]
-  },
-  {
-    id:'softdev',
-    name:'Software Development',
-    icon:<Computer className="w-6 h-6" />,
-    color:'red',
-    technologies:[
-        {
-            name:'Java',
-            level:'Advanced',
-            experience:'3+ years',
-            projects:['Desktop Apps','Enterprise Apps'],
-            description:'Swing, JavaFX, Spring Boot'
-        },
-        {
-            name:'C#',
-            level:'Intermediate',
-            experience:'2+ years',
-            projects:['Desktop Apps','Enterprise Apps'],
-            description:'Swing, JavaFX, Spring Boot'
-        },
-        {
-            name:'C#',
-            level:'Beginner',
-            experience:'1+ year',
-            projects:['Desktop Apps','Enterprise Apps'],
-            description:'Swing, JavaFX, Spring Boot'
-        }
-      
-    ]
-  },
-  {
-    id: 'devops',
-    name: 'DevOps & Cloud',
-    icon: <Cloud className="w-6 h-6" />,
-    color: 'orange',
-    technologies: [
-      {
-        name: 'Docker',
-        level: 'Advanced',
-        experience: '3+ years',
-        projects: ['Containerization', 'Multi-stage builds', 'Docker Compose'],
-        description: 'Dockerfiles, optimization, orchestration'
+        logo: 'https://cdn.simpleicons.org/csharp/239120'
       },
       {
-        name: 'AWS',
+        name: 'MongoDB',
         level: 'Intermediate',
         experience: '2+ years',
-        projects: ['Cloud Deployment', 'Lambda Functions', 'S3 Storage'],
-        description: 'EC2, S3, Lambda, CloudFront'
-      },
-      {
-        name: 'CI/CD',
-        level: 'Advanced',
-        experience: '3+ years',
-        projects: ['GitHub Actions', 'Automated Testing', 'Deployment Pipelines'],
-        description: 'YAML configurations, testing strategies'
+        logo: 'https://cdn.simpleicons.org/mongodb/47A248'
       }
     ]
   },
   {
     id: 'tools',
-    name: 'Tools & Technologies',
-    icon: <Terminal className="w-6 h-6" />,
-    color: 'red',
+    name: 'Tools',
+    icon: <Terminal className="w-5 h-5" />,
+    color: 'purple',
     technologies: [
       {
         name: 'Git',
         level: 'Expert',
         experience: '5+ years',
-        projects: ['Version Control', 'Branch Management', 'Code Reviews'],
-        description: 'Advanced workflows, rebase, cherry-pick'
+        logo: 'https://cdn.simpleicons.org/git/F05032'
       },
       {
         name: 'VS Code',
         level: 'Expert',
         experience: '5+ years',
-        projects: ['Custom Extensions', 'Debugging', 'Productivity Workflows'],
-        description: 'Extensions, debugging, snippets'
+        logo: 'https://cdn.simpleicons.org/visualstudiocode/007ACC'
       },
       {
-        name: 'Webpack',
+        name: 'Figma',
+        level: 'Advanced',
+        experience: '3+ years',
+        logo: 'https://cdn.simpleicons.org/figma/F24E1E'
+      },
+      {
+        name: 'Postman',
+        level: 'Advanced',
+        experience: '3+ years',
+        logo: 'https://cdn.simpleicons.org/postman/FF6C37'
+      }
+    ]
+  },
+  {
+    id: 'cicd',
+    name: 'CI/CD',
+    icon: <Wrench className="w-5 h-5" />,
+    color: 'orange',
+    technologies: [
+      {
+        name: 'GitHub Actions',
+        level: 'Advanced',
+        experience: '3+ years',
+        logo: 'https://cdn.simpleicons.org/githubactions/2088FF'
+      },
+      {
+        name: 'Jenkins',
         level: 'Intermediate',
         experience: '2+ years',
-        projects: ['Build Optimization', 'Custom Configurations'],
-        description: 'Module bundling, optimization, plugins'
+        logo: 'https://cdn.simpleicons.org/jenkins/D24939'
+      },
+      {
+        name: 'GitLab CI',
+        level: 'Intermediate',
+        experience: '2+ years',
+        logo: 'https://cdn.simpleicons.org/gitlab/FC6D26'
+      }
+    ]
+  },
+  {
+    id: 'deployment',
+    name: 'Deployment',
+    icon: <Rocket className="w-5 h-5" />,
+    color: 'teal',
+    technologies: [
+      {
+        name: 'Docker',
+        level: 'Advanced',
+        experience: '3+ years',
+        logo: 'https://cdn.simpleicons.org/docker/2496ED'
+      },
+      {
+        name: 'AWS',
+        level: 'Intermediate',
+        experience: '2+ years',
+        logo: 'https://cdn.simpleicons.org/amazonwebservices/232F3E'
+      },
+      {
+        name: 'Vercel',
+        level: 'Advanced',
+        experience: '3+ years',
+        logo: 'https://cdn.simpleicons.org/vercel/000000'
+      },
+      {
+        name: 'Netlify',
+        level: 'Intermediate',
+        experience: '2+ years',
+        logo: 'https://cdn.simpleicons.org/netlify/00C7B7'
+      },
+      {
+        name: 'Kubernetes',
+        level: 'Beginner',
+        experience: '1+ year',
+        logo: 'https://cdn.simpleicons.org/kubernetes/326CE5'
       }
     ]
   }
@@ -196,142 +218,188 @@ const techData: TechCategory[] = [
 
 const getLevelColor = (level: string) => {
   switch (level) {
-    case 'Expert': return 'bg-green-900 text-green-300';
-    case 'Advanced': return 'bg-blue-900 text-blue-300';
-    case 'Intermediate': return 'bg-yellow-900 text-yellow-300';
-    case 'Beginner': return 'bg-gray-700 text-gray-300';
-    default: return 'bg-gray-700 text-gray-300';
+    case 'Expert': return 'from-emerald-500 to-green-600';
+    case 'Advanced': return 'from-blue-500 to-blue-600';
+    case 'Intermediate': return 'from-amber-500 to-orange-600';
+    case 'Beginner': return 'from-slate-500 to-slate-600';
+    default: return 'from-slate-500 to-slate-600';
   }
 };
 
-const getLevelWidth = (level: string) => {
+const getLevelBorderColor = (level: string) => {
   switch (level) {
-    case 'Expert': return 'w-full';
-    case 'Advanced': return 'w-4/5';
-    case 'Intermediate': return 'w-3/5';
-    case 'Beginner': return 'w-2/5';
-    default: return 'w-1/5';
+    case 'Expert': return 'border-emerald-500/50';
+    case 'Advanced': return 'border-blue-500/50';
+    case 'Intermediate': return 'border-amber-500/50';
+    case 'Beginner': return 'border-slate-500/50';
+    default: return 'border-slate-500/50';
   }
 };
 
 const getCategoryColor = (color: string) => {
   const colors: Record<string, string> = {
-    blue: 'bg-blue-600 text-white',
-    green: 'bg-green-600 text-white',
-    purple: 'bg-purple-600 text-white',
-    orange: 'bg-orange-600 text-white',
-    red: 'bg-red-600 text-white'
+    blue: 'from-blue-600 to-blue-500',
+    green: 'from-green-600 to-green-500',
+    purple: 'from-purple-600 to-purple-500',
+    orange: 'from-orange-600 to-orange-500',
+    teal: 'from-teal-600 to-teal-500'
   };
-  return colors[color] || 'bg-slate-600 text-white';
-};
-
-const getBarColor = (color: string) => {
-  const colors: Record<string, string> = {
-    blue: 'bg-blue-600',
-    green: 'bg-green-600',
-    purple: 'bg-purple-600',
-    orange: 'bg-orange-600',
-    red: 'bg-red-600'
-  };
-  return colors[color] || 'bg-slate-600';
-};
-
-const getProjectBadgeColor = (color: string) => {
-  const colors: Record<string, string> = {
-    blue: 'bg-blue-900 text-blue-300',
-    green: 'bg-green-900 text-green-300',
-    purple: 'bg-purple-900 text-purple-300',
-    orange: 'bg-orange-900 text-orange-300',
-    red: 'bg-red-900 text-red-300'
-  };
-  return colors[color] || 'bg-slate-700 text-slate-300';
+  return colors[color] || 'from-slate-600 to-slate-500';
 };
 
 export function TechApp() {
-  return (
-    <div className="min-h-screen bg-gray-900 pt-20 pb-16">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-white mb-4">
-            Tech Stack & Skills
-          </h1>
-          <p className="text-lg text-gray-300">
-            Technologies I work with and my proficiency levels
-          </p>
-        </div>
+  const [hoveredTech, setHoveredTech] = useState<string | null>(null);
 
-        {/* Tech Categories */}
-        <div className="space-y-12">
-          {techData.map((category) => (
-            <section key={category.id}>
-              <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-2">
-                <div className={`p-2 ${getCategoryColor(category.color)} rounded-lg`}>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center p-8 relative overflow-hidden">
+      {/* Animated background grid */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      
+      {/* Gradient orbs */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+
+      <div className="max-w-7xl w-full relative z-10">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <motion.h1
+            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-3"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            Tech Stack & Skills
+          </motion.h1>
+          <motion.p
+            className="text-base text-slate-400"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            Hover over any technology to see my proficiency level
+          </motion.p>
+        </motion.div>
+
+        {/* Tech Categories Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+          {techData.map((category, categoryIndex) => (
+            <motion.div
+              key={category.id}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
+              className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-md rounded-2xl p-6 border border-slate-700/50 shadow-xl"
+            >
+              {/* Category Header */}
+              <motion.div
+                className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-700/50"
+                whileHover={{ x: 2 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <motion.div
+                  className={`p-2 bg-gradient-to-br ${getCategoryColor(category.color)} rounded-lg shadow-lg`}
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ type: "spring", stiffness: 400 }}
+                >
                   {category.icon}
-                </div>
-                {category.name}
-              </h2>
-              
-              <div className="relative">
-                {/* Timeline Line */}
-                <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-700"></div>
-                
+                </motion.div>
+                <h2 className="text-lg font-bold text-white">{category.name}</h2>
+              </motion.div>
+
+              {/* Technologies Grid */}
+              <div className="grid grid-cols-3 gap-3">
                 {category.technologies.map((tech, index) => (
-                  <div key={index} className="relative flex items-start mb-12">
-                    {/* Timeline Dot */}
-                    <div className={`absolute left-8 w-4 h-4 ${getBarColor(category.color)} rounded-full border-4 border-gray-900 transform -translate-x-1/2`}></div>
-                    
-                    {/* Content */}
-                    <div className="ml-20 flex-1">
-                      <div className="bg-gray-800 rounded-lg shadow-lg p-6">
-                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
-                          <h3 className="text-xl font-semibold text-white">
+                  <motion.div
+                    key={index}
+                    className="relative group"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3, delay: categoryIndex * 0.1 + index * 0.05 }}
+                    onHoverStart={() => setHoveredTech(`${category.id}-${index}`)}
+                    onHoverEnd={() => setHoveredTech(null)}
+                  >
+                    {/* Tech Icon Container */}
+                    <motion.div
+                      className="relative bg-slate-900/80 rounded-xl p-3 border border-slate-700/50 cursor-pointer aspect-square flex items-center justify-center"
+                      whileHover={{ scale: 1.1, y: -4 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                    >
+                      {/* Glow effect on hover */}
+                      <motion.div
+                        className={`absolute inset-0 bg-gradient-to-br ${getLevelColor(tech.level)} rounded-xl blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-300`}
+                      ></motion.div>
+                      
+                      {/* Logo */}
+                      <img
+                        src={tech.logo}
+                        alt={tech.name}
+                        className="w-full h-full object-contain relative z-10"
+                        loading="lazy"
+                      />
+
+                      {/* Tooltip - Shows on hover */}
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                        animate={
+                          hoveredTech === `${category.id}-${index}`
+                            ? { opacity: 1, scale: 1, y: 0 }
+                            : { opacity: 0, scale: 0.9, y: 10 }
+                        }
+                        transition={{ duration: 0.2 }}
+                        className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 pointer-events-none z-20 whitespace-nowrap"
+                      >
+                        <div className={`bg-slate-900 border ${getLevelBorderColor(tech.level)} rounded-lg px-3 py-2 shadow-2xl`}>
+                          <div className="text-xs font-semibold text-white mb-1">
                             {tech.name}
-                          </h3>
-                          <span className={`px-3 py-1 text-xs rounded-full mt-1 sm:mt-0 ${getLevelColor(tech.level)}`}>
+                          </div>
+                          <div className={`text-xs bg-gradient-to-r ${getLevelColor(tech.level)} bg-clip-text text-transparent font-bold`}>
                             {tech.level}
-                          </span>
-                        </div>
-                        
-                        <div className="mb-3">
-                          <p className="text-sm text-gray-400">
-                            {tech.experience} experience
-                          </p>
-                        </div>
-                        
-                        {/* Proficiency Bar */}
-                        <div className="mb-4">
-                          <div className="w-full bg-gray-700 rounded-full h-2">
-                            <div
-                              className={`${getBarColor(category.color)} h-2 rounded-full transition-all duration-500 ${getLevelWidth(tech.level)}`}
-                            ></div>
+                          </div>
+                          <div className="text-xs text-slate-400 mt-1">
+                            {tech.experience}
                           </div>
                         </div>
+                        {/* Arrow */}
+                        <div className={`absolute top-full left-1/2 -translate-x-1/2 -mt-px w-2 h-2 bg-slate-900 border-b ${getLevelBorderColor(tech.level)} border-r rotate-45`}></div>
+                      </motion.div>
+                    </motion.div>
 
-                        {tech.description && (
-                          <p className="text-gray-300 text-sm mb-4">
-                            {tech.description}
-                          </p>
-                        )}
-                        
-                        <div className="flex flex-wrap gap-2">
-                          {tech.projects.map((project, idx) => (
-                            <span
-                              key={idx}
-                              className={`px-3 py-1 text-xs rounded-full ${getProjectBadgeColor(category.color)}`}
-                            >
-                              {project}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                    {/* Level indicator dot */}
+                    <motion.div
+                      className={`absolute -bottom-1 -right-1 w-3 h-3 bg-gradient-to-br ${getLevelColor(tech.level)} rounded-full border-2 border-slate-900 shadow-lg`}
+                      animate={
+                        hoveredTech === `${category.id}-${index}`
+                          ? { scale: [1, 1.3, 1] }
+                          : { scale: 1 }
+                      }
+                      transition={{ duration: 0.6, repeat: hoveredTech === `${category.id}-${index}` ? Infinity : 0 }}
+                    ></motion.div>
+                  </motion.div>
                 ))}
               </div>
-            </section>
+            </motion.div>
           ))}
         </div>
+
+        {/* Legend */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="flex justify-center items-center gap-6 mt-10 flex-wrap"
+        >
+          {['Expert', 'Advanced', 'Intermediate', 'Beginner'].map((level) => (
+            <div key={level} className="flex items-center gap-2">
+              <div className={`w-3 h-3 rounded-full bg-gradient-to-br ${getLevelColor(level)}`}></div>
+              <span className="text-xs text-slate-400">{level}</span>
+            </div>
+          ))}
+        </motion.div>
       </div>
     </div>
   );

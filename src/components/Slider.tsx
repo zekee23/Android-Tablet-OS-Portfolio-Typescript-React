@@ -21,6 +21,7 @@ export function Slider({ label, value, min, max, onChange, icon }: SliderProps) 
       </div>
       <input 
         type="range" 
+        aria-label={`${label} Slider`}
         min={min} 
         max={max} 
         value={value} 

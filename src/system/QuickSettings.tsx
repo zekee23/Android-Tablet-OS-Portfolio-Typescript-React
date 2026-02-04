@@ -205,7 +205,7 @@ export function QuickSettings() {
               <div className="text-xs text-white/40 mt-0.5">Manila, Philippines</div>
             </div>
             <button className="p-2 rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 text-white transition-colors touch-manipulation">
-              <Settings size={20} />
+              <Settings aria-label="Settings" size={20} />
             </button>
           </div>
 

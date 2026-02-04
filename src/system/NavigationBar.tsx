@@ -38,6 +38,7 @@ export function NavigationBar() {
         onClick={handleBack}
         className="p-2 text-white hover:bg-white hover:bg-opacity-20 rounded-full transition-colors"
         disabled={!state.activeAppId}
+        aria-label="Go back"
       >
         <ArrowLeft className="w-5 h-5" />
       </button>
@@ -45,6 +46,7 @@ export function NavigationBar() {
       <button
         onClick={handleHome}
         className="p-2 text-white hover:bg-white hover:bg-opacity-20 rounded-full transition-colors"
+        aria-label="Go home"
       >
         <Home className="w-5 h-5" />
       </button>
@@ -52,6 +54,7 @@ export function NavigationBar() {
       <button
         onClick={handleRecent}
         className="p-2 text-white hover:bg-white hover:bg-opacity-20 rounded-full transition-colors"
+        aria-label="Show recent apps"
       >
         <Square className="w-5 h-5" />
       </button>

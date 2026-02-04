@@ -16,7 +16,7 @@ export function AppGrid({ apps, onAppClick }: AppGridProps) {
         >
           <div className="w-14 h-14 mb-3 flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-lg">
             <span className="text-white text-2xl font-bold">
-              {app.name.charAt(0)}
+              {app.icon}
             </span>
           </div>
           <span className="text-xs text-white/90 text-center font-medium">
