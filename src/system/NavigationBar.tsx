@@ -1,32 +1,45 @@
 import { Home, Square, ArrowLeft } from 'lucide-react';
 import { useOS } from '../hooks/useOS';
+import { useCallback, useRef } from 'react';
 
 export function NavigationBar() {
   const { state, actions } = useOS();
+  const lastBackTime = useRef<number>(0);
+  const BACK_BUTTON_DEBOUNCE_MS = 300; // Prevent rapid successive back presses
 
-  const handleHome = () => {
+  const handleHome = useCallback(() => {
     actions.closeApp(state.activeAppId || '');
-  };
+  }, [actions, state.activeAppId]);
 
-  const handleBack = () => {
+  const handleBack = useCallback(() => {
+    const now = Date.now();
+    if (now - lastBackTime.current < BACK_BUTTON_DEBOUNCE_MS) {
+      return; // Debounce rapid successive presses
+    }
+    lastBackTime.current = now;
+
     // Check if the current app has a custom back handler
     const customBackHandler = (window as any).customBackHandler;
     
     if (customBackHandler && typeof customBackHandler === 'function') {
-      const handled = customBackHandler();
-      if (handled) {
-        return; // Custom handler handled the back action
+      try {
+        const handled = customBackHandler();
+        if (handled) {
+          return; // Custom handler handled the back action
+        }
+      } catch (error) {
+        console.error('Custom back handler error:', error);
       }
     }
     
-    // Default OS back behavior
+    // Default OS back behavior - optimized
     if (state.taskStack.length > 1) {
       const previousApp = state.taskStack[state.taskStack.length - 2];
       actions.switchToApp(previousApp.appId);
-    } else {
-      actions.closeApp(state.activeAppId || '');
+    } else if (state.activeAppId) {
+      actions.closeApp(state.activeAppId);
     }
-  };
+  }, [actions, state.taskStack, state.activeAppId]);
 
   const handleRecent = () => {
     // TODO: Open task switcher

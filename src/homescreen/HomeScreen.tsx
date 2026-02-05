@@ -10,12 +10,26 @@ interface HomeScreenProps {
 
 export function HomeScreen({ apps }: HomeScreenProps) {
   const { actions } = useOS();
-  const [currentTime, setCurrentTime] = useState('');
-  const [currentDate, setCurrentDate] = useState('');
-  const [isClient, setIsClient] = useState(false);
+  const [currentTime, setCurrentTime] = useState(() =>
+    typeof window !== 'undefined'
+      ? new Date().toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        })
+      : '00:00'
+  );
+  const [currentDate, setCurrentDate] = useState(() =>
+    typeof window !== 'undefined'
+      ? new Date().toLocaleDateString('en-PH', {
+          weekday: 'short',
+          month: 'short',
+          day: 'numeric',
+        })
+      : 'Loading...'
+  );
 
   useEffect(() => {
-    setIsClient(true);
     const updateTime = () => {
       setCurrentTime(new Date().toLocaleTimeString('en-US', {
         hour: '2-digit',
@@ -30,7 +44,6 @@ export function HomeScreen({ apps }: HomeScreenProps) {
       }));
     };
 
-    updateTime();
     const interval = setInterval(updateTime, 1000);
     return () => clearInterval(interval);
   }, []);
@@ -47,16 +60,16 @@ export function HomeScreen({ apps }: HomeScreenProps) {
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 pt-16 pb-16">
         <div className="text-center text-white mb-12">
           <h1 className="text-6xl font-extralight mb-2 drop-shadow-lg" style={{ fontDisplay: 'swap' } as React.CSSProperties}>
-            {isClient ? currentTime : '00:00'}
+            {currentTime}
           </h1>
           <p className="text-xl text-white/70 font-light drop-shadow-md">
-            {isClient ? currentDate : 'Loading...'}
+            {currentDate}
           </p>
           <p className="text-l text-white/70 font-light drop-shadow-md">Manila, Philippines</p>
         </div>
         
         <div className="w-full max-w-md pt-7">
-          {isClient && <AppGrid apps={apps} onAppClick={actions.openApp} />}
+          <AppGrid apps={apps} onAppClick={actions.openApp} />
         </div>
         
         <div className="mt-8 space-y-2">

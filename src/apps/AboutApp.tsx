@@ -1,6 +1,5 @@
 import { Mail } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
-import { motion } from 'framer-motion';
 
 export function AboutApp() {
   return (
@@ -8,13 +7,8 @@ export function AboutApp() {
       <div className="max-w-2xl mx-auto space-y-8">
 
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center"
-        >
-          <div className="relative w-28 h-28 mx-auto mb-5 rounded-full overflow-hidden border-4 border-blue-500 shadow-xl">
+        <div className="text-center animate-fade-in">
+          <div className="relative w-28 h-28 mx-auto mb-5 rounded-full overflow-hidden border-4 border-blue-500 shadow-xl transition-transform duration-200 hover:scale-105">
             <img
               src="/avatar.jpg"
               alt="Earl Jann Rivera"
@@ -27,27 +21,22 @@ export function AboutApp() {
           </h1>
 
           <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Junior Full Stack Developer • PERN & MERN Stack
+            Junior Full Stack Developer • PERN & MERN Stack • Android Developer
           </p>
 
           <div className="mt-4 flex justify-center">
             <a
               href="/Earl Jann Rivera Resume (3).pdf"
               download
-              className="px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition shadow-md"
+              className="px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition shadow-md hover:shadow-lg hover:-translate-y-0.5"
             >
               Download Resume
             </a>
           </div>
-        </motion.div>
+        </div>
 
         {/* About */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800"
-        >
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 animate-fade-in animate-delay-100">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
             About Me
           </h2>
@@ -64,15 +53,10 @@ export function AboutApp() {
             writing maintainable code, and understanding how systems work end to end — from the
             user interface down to the backend logic.
           </p>
-        </motion.div>
+        </div>
 
         {/* Contact */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800"
-        >
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 animate-fade-in animate-delay-200">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
             Contact & Links
           </h2>
@@ -80,7 +64,7 @@ export function AboutApp() {
           <div className="space-y-4">
             <a
               href="mailto:earlrivera00@gmail.com"
-              className="flex items-center gap-3 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
+              className="flex items-center gap-3 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition hover:translate-x-1"
             >
               <Mail className="w-5 h-5" />
               <span>earlrivera00@gmail.com</span>
@@ -90,7 +74,7 @@ export function AboutApp() {
               href="https://github.com/zekee23"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
+              className="flex items-center gap-3 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition hover:translate-x-1"
             >
               <FaGithub className="w-5 h-5" />
               <span>github.com/zekee23</span>
@@ -100,13 +84,13 @@ export function AboutApp() {
               href="www.linkedin.com/in/earl-jann-rivera-835a8034a"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
+              className="flex items-center gap-3 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition hover:translate-x-1"
             >
               <FaLinkedin className="w-5 h-5" />
               <span>www.linkedin.com/in/earl-jann-rivera-835a8034a</span>
             </a>
           </div>
-        </motion.div>
+        </div>
 
       </div>
     </div>

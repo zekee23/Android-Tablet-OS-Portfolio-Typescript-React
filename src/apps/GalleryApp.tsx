@@ -12,45 +12,45 @@ interface GalleryImage {
 const sampleImages: GalleryImage[] = [
   {
     id: '1',
-    src: 'https://picsum.photos/400/300?random=1',
+    src: './1.png',
     alt: 'Project 1',
-    title: 'Web Application',
-    category: 'Development'
+    title: 'Cloud Devops Basics',
+    category: 'Cloud'
   },
   {
     id: '2',
-    src: 'https://picsum.photos/400/300?random=2',
+    src: './2.png',
     alt: 'Project 2',
-    title: 'Mobile Design',
-    category: 'Design'
+    title: 'Azure Cloud Networking',
+    category: 'Cloud'
   },
   {
     id: '3',
-    src: 'https://picsum.photos/400/300?random=3',
+    src: './3.png',
     alt: 'Project 3',
-    title: 'Brand Identity',
-    category: 'Branding'
+    title: 'CyberSecurity Seminar',
+    category: 'CyberSecurity'
   },
   {
     id: '4',
-    src: 'https://picsum.photos/400/300?random=4',
+    src: './4.png',
     alt: 'Project 4',
-    title: 'UI Components',
-    category: 'Design'
+    title: 'Membership Card',
+    category: 'CyberSecurity'
   },
   {
     id: '5',
-    src: 'https://picsum.photos/400/300?random=5',
+    src: './5.png',
     alt: 'Project 5',
-    title: 'Data Visualization',
-    category: 'Development'
+    title: 'OJT Completion',
+    category: 'Career'
   },
   {
     id: '6',
-    src: 'https://picsum.photos/400/300?random=6',
+    src: './6.png',
     alt: 'Project 6',
-    title: 'Marketing Campaign',
-    category: 'Marketing'
+    title: 'Civil Service Professional Passer',
+    category: 'Career'
   }
 ];
 
@@ -112,10 +112,18 @@ export function GalleryApp() {
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
             My Gallery
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-            A collection of my work and projects
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+            A collection of my achievements and projects
           </p>
           
+          {/* Minimal Badge */}
+          <div className="text-center mb-6">
+            <span className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-xs rounded-full">
+              
+              I'm currently grinding for projects and Certs. More content being added :D
+            </span>
+          </div>
+           
           {/* Filter Buttons */}
           <div className="flex flex-wrap justify-center gap-2">
             {categories.map((category) => (
