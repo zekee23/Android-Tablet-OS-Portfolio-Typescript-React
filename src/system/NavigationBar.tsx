@@ -8,7 +8,9 @@ export function NavigationBar() {
   const BACK_BUTTON_DEBOUNCE_MS = 300; // Prevent rapid successive back presses
 
   const handleHome = useCallback(() => {
-    actions.closeApp(state.activeAppId || '');
+    if (state.activeAppId) {
+      actions.pauseApp(state.activeAppId);
+    }
   }, [actions, state.activeAppId]);
 
   const handleBack = useCallback(() => {
@@ -32,17 +34,15 @@ export function NavigationBar() {
       }
     }
     
-    // Default OS back behavior - optimized
-    if (state.taskStack.length > 1) {
-      const previousApp = state.taskStack[state.taskStack.length - 2];
-      actions.switchToApp(previousApp.appId);
-    } else if (state.activeAppId) {
+    // Default OS back behavior - always close current app when back is pressed
+    if (state.activeAppId) {
       actions.closeApp(state.activeAppId);
     }
-  }, [actions, state.taskStack, state.activeAppId]);
+  }, [actions, state.activeAppId]);
 
   const handleRecent = () => {
-    // TODO: Open task switcher
+    // Dispatch custom event to open task switcher
+    window.dispatchEvent(new CustomEvent('openTaskSwitcher'));
   };
 
   return (

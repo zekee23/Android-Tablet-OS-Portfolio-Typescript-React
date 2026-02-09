@@ -330,11 +330,11 @@ const TechItem = memo(({
     >
       {/* Tech Icon Container */}
       <div
-        className="relative bg-slate-900/80 rounded-xl p-3 border border-slate-700/50 aspect-square flex items-center justify-center transition-all duration-200 hover:scale-105 hover:-translate-y-1"
+        className="relative bg-slate-900/80 rounded-xl p-3 border border-slate-700/50 aspect-square flex items-center justify-center transition-transform duration-200 hover:scale-105"
       >
-        {/* Glow effect on hover */}
+        {/* Glow effect on hover - simplified for performance */}
         <div
-          className={`absolute inset-0 bg-gradient-to-br ${levelColor} rounded-xl blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-300`}
+          className={`absolute inset-0 bg-gradient-to-br ${levelColor} rounded-xl opacity-0 group-hover:opacity-30 transition-opacity duration-200`}
         />
         
         {/* Logo */}
@@ -435,8 +435,8 @@ export function TechAppOptimized() {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
       
       {/* Reduced gradient orbs for performance */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full" />
 
       <div className="max-w-7xl w-full relative z-10">
         {/* Header - No animations */}

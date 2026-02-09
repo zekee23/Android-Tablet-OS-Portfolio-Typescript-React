@@ -1,7 +1,7 @@
-import { useState, Suspense, useMemo, useCallback } from 'react';
+import { useState, useEffect, Suspense, useMemo, useCallback } from 'react';
 import { OSProvider } from './context';
 import { NavigationBar } from '../system/NavigationBar';
-import { TaskSwitcher } from '../system/TaskSwitcher';
+import { TaskSwitcher } from '../components/TaskSwitcher';
 import { QuickSettings } from '../system/QuickSettings';
 import { HomeScreen } from '../homescreen/HomeScreen';
 import { availableApps, getAppComponent } from './AppRegistry';
@@ -20,6 +20,19 @@ function OSContent() {
   // Memoize the task switcher handler
   const handleTaskSwitcherToggle = useCallback(() => {
     setTaskSwitcherOpen(prev => !prev);
+  }, []);
+
+  // Listen for custom event to open task switcher
+  useEffect(() => {
+    const handleOpenTaskSwitcher = () => {
+      setTaskSwitcherOpen(true);
+    };
+
+    window.addEventListener('openTaskSwitcher', handleOpenTaskSwitcher);
+    
+    return () => {
+      window.removeEventListener('openTaskSwitcher', handleOpenTaskSwitcher);
+    };
   }, []);
 
   return (

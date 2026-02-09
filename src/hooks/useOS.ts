@@ -20,6 +20,14 @@ export function useOS() {
     dispatch({ type: 'CLEAR_TASK_STACK' });
   }, [dispatch]);
 
+  const pauseApp = useCallback((appId: string) => {
+    dispatch({ type: 'PAUSE_APP', payload: appId });
+  }, [dispatch]);
+
+  const resumeApp = useCallback((appId: string) => {
+    dispatch({ type: 'RESUME_APP', payload: appId });
+  }, [dispatch]);
+
   return {
     state,
     actions: {
@@ -27,6 +35,8 @@ export function useOS() {
       closeApp,
       switchToApp,
       clearTaskStack,
+      pauseApp,
+      resumeApp,
     },
   };
 }

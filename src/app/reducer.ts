@@ -12,6 +12,7 @@ export function osReducer(state: OSState, action: OSAction): OSState {
       const newTask: Task = {
         appId: action.payload,
         timestamp: Date.now(),
+        paused: false,
       };
       
       const existingTaskIndex = state.taskStack.findIndex(task => task.appId === action.payload);
@@ -37,15 +38,10 @@ export function osReducer(state: OSState, action: OSAction): OSState {
     case 'CLOSE_APP': {
       const newTaskStack = state.taskStack.filter(task => task.appId !== action.payload);
       
-      let newActiveAppId: string | null = null;
-      if (state.activeAppId === action.payload && newTaskStack.length > 0) {
-        const latestTask = newTaskStack[newTaskStack.length - 1];
-        newActiveAppId = latestTask.appId;
-      }
-
+      // Always go to home when closing an app (set activeAppId to null)
       return {
         ...state,
-        activeAppId: newActiveAppId,
+        activeAppId: null,
         taskStack: newTaskStack,
       };
     }
@@ -85,6 +81,36 @@ export function osReducer(state: OSState, action: OSAction): OSState {
         ...state,
         quickSettingsOpen: false,
       };
+
+    case 'PAUSE_APP': {
+      const newTaskStack = state.taskStack.map(task => 
+        task.appId === action.payload ? { ...task, paused: true } : task
+      );
+      
+      return {
+        ...state,
+        taskStack: newTaskStack,
+        activeAppId: action.payload === state.activeAppId ? null : state.activeAppId,
+      };
+    }
+
+    case 'RESUME_APP': {
+      const newTaskStack = state.taskStack.map(task => 
+        task.appId === action.payload ? { ...task, paused: false } : task
+      );
+      
+      const task = newTaskStack.find(t => t.appId === action.payload);
+      const updatedTaskStack = task ? [
+        ...newTaskStack.filter(t => t.appId !== action.payload),
+        task
+      ] : newTaskStack;
+
+      return {
+        ...state,
+        activeAppId: action.payload,
+        taskStack: updatedTaskStack,
+      };
+    }
 
     case 'CLEAR_TASK_STACK':
       return {

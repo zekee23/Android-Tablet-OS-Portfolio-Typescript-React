@@ -62,7 +62,7 @@ const ProjectLinks = React.memo(({ demoUrl, githubUrl }: { demoUrl?: string; git
 
 // Memoized project insights component
 const ProjectInsights = React.memo(({ project, isOpen }: { project: Project; isOpen: boolean }) => (
-  <div className={`mt-4 space-y-3 text-sm text-slate-300 overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+  <div className={`mt-4 space-y-3 text-sm text-slate-300 overflow-hidden ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
     {project.motivation && (
       <p>
         <span className="font-medium text-slate-200">
@@ -94,13 +94,11 @@ const ProjectInsights = React.memo(({ project, isOpen }: { project: Project; isO
 const ProjectCard = React.memo(({ 
   project, 
   isOpen, 
-  onToggle,
-  index 
+  onToggle
 }: { 
   project: Project; 
   isOpen: boolean; 
   onToggle: (id: string) => void;
-  index: number;
 }) => {
   const handleToggle = useCallback(() => {
     onToggle(project.id);
@@ -109,8 +107,7 @@ const ProjectCard = React.memo(({
   return (
     <div
       key={project.id}
-      className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-md rounded-2xl p-6 border border-slate-700/50 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl animate-fade-in animate-delay-100"
-      style={{ animationDelay: `${index * 80}ms` }}
+      className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 rounded-2xl p-6 border border-slate-700/50 shadow-lg will-change-transform"
     >
       <h3 className="text-xl font-semibold text-white mb-2">
         {project.title}
@@ -205,12 +202,12 @@ export function ProjectsApp() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center p-8 relative overflow-hidden">
-      {/* Animated background grid */}
+      {/* Simplified background for performance */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
       
-      {/* Gradient orbs */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+      {/* Reduced gradient orbs - removed blur-3xl for performance */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full"></div>
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full"></div>
 
     <div className="max-w-4xl w-full relative z-10">
       <h1 className="text-4xl md:text-5xl pt-5 font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-8 text-center animate-fade-in">
@@ -218,13 +215,12 @@ export function ProjectsApp() {
       </h1>
 
       <div className="grid gap-6">
-        {projects.map((project, index) => (
+        {projects.map((project) => (
           <ProjectCard
             key={project.id}
             project={project}
             isOpen={openProjectId === project.id}
             onToggle={handleToggleProject}
-            index={index}
           />
         ))}
       </div>

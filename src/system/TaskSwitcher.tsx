@@ -14,7 +14,12 @@ export function TaskSwitcher({ apps, isOpen, onClose }: TaskSwitcherProps) {
   if (!isOpen) return null;
 
   const handleTaskClick = (appId: string) => {
-    actions.switchToApp(appId);
+    const task = state.taskStack.find(t => t.appId === appId);
+    if (task?.paused) {
+      actions.resumeApp(appId);
+    } else {
+      actions.switchToApp(appId);
+    }
     onClose();
   };
 
@@ -26,8 +31,11 @@ export function TaskSwitcher({ apps, isOpen, onClose }: TaskSwitcherProps) {
   const recentApps = state.taskStack
     .slice()
     .reverse()
-    .map(task => apps.find(app => app.id === task.appId))
-    .filter(Boolean) as App[];
+    .map(task => {
+      const app = apps.find(a => a.id === task.appId);
+      return app ? { ...app, paused: task.paused } : null;
+    })
+    .filter(Boolean) as (App & { paused: boolean })[];
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-end">
@@ -54,7 +62,11 @@ export function TaskSwitcher({ apps, isOpen, onClose }: TaskSwitcherProps) {
               <div
                 key={app.id}
                 onClick={() => handleTaskClick(app.id)}
-                className="relative bg-gray-50 dark:bg-gray-700 rounded-lg p-4 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                className={`relative bg-gray-50 dark:bg-gray-700 rounded-lg p-4 cursor-pointer transition-colors ${
+                  app.paused 
+                    ? 'opacity-60 hover:bg-gray-100 dark:hover:bg-gray-600' 
+                    : 'hover:bg-gray-100 dark:hover:bg-gray-600'
+                }`}
               >
                 <button
                   onClick={(e) => handleTaskClose(e, app.id)}
@@ -64,7 +76,9 @@ export function TaskSwitcher({ apps, isOpen, onClose }: TaskSwitcherProps) {
                 </button>
                 
                 <div className="flex flex-col items-center">
-                  <div className="w-12 h-12 mb-2 flex items-center justify-center bg-blue-500 rounded-lg">
+                  <div className={`w-12 h-12 mb-2 flex items-center justify-center rounded-lg ${
+                    app.paused ? 'bg-gray-400' : 'bg-blue-500'
+                  }`}>
                     <span className="text-white text-xl font-bold">
                       {app.name.charAt(0)}
                     </span>
@@ -72,6 +86,11 @@ export function TaskSwitcher({ apps, isOpen, onClose }: TaskSwitcherProps) {
                   <span className="text-sm text-gray-700 dark:text-gray-300 text-center">
                     {app.name}
                   </span>
+                  {app.paused && (
+                    <span className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      Paused
+                    </span>
+                  )}
                 </div>
               </div>
             ))}

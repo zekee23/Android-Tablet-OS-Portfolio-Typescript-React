@@ -66,6 +66,7 @@ export function HomeScreen({ apps }: HomeScreenProps) {
             {currentDate}
           </p>
           <p className="text-l text-white/70 font-light drop-shadow-md">Manila, Philippines</p>
+          <p className="text-sm text-white/80 font-bold drop shadow-md">Philippines (GMT+8)</p>
         </div>
         
         <div className="w-full max-w-md pt-7">

@@ -94,7 +94,7 @@ const TimelineItem = React.memo(({
 }) => {
 
   return (
-    <div className="relative flex items-start mb-12 timeline-item gpu-accelerated">
+    <div className="relative flex items-start mb-12 timeline-item">
       {/* Timeline Dot */}
       <div 
         className={`absolute left-8 w-4 h-4 ${dotColor} rounded-full border-4 border-white dark:border-gray-900 transform -translate-x-1/2`}
@@ -102,7 +102,7 @@ const TimelineItem = React.memo(({
       
       {/* Content */}
       <div className="ml-20 flex-1">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 gpu-accelerated">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
               {item.title}
@@ -157,15 +157,17 @@ const Header = React.memo(() => (
 ));
 
 export function ExperienceApp() {
-  // Memoize filtered data and color classes to prevent recalculation on every render
-  const { workExperience, education, workSkillClass, educationSkillClass } = useMemo(() => {
+  // Memoize filtered data separately to prevent recalculation on every render
+  const { workExperience, education } = useMemo(() => {
     return {
       workExperience: experienceData.filter(exp => exp.type === 'work'),
-      education: experienceData.filter(exp => exp.type === 'education'),
-      workSkillClass: 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300',
-      educationSkillClass: 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300'
+      education: experienceData.filter(exp => exp.type === 'education')
     };
   }, []);
+
+  // Define color classes as constants outside of useMemo
+  const workSkillClass = 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300';
+  const educationSkillClass = 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300';
 
   // Memoize timeline items to prevent recreation during scroll
   const workTimelineItems = useMemo(() => 
@@ -175,7 +177,7 @@ export function ExperienceApp() {
       dotColor: 'bg-blue-500',
       skillColorClass: workSkillClass
     })),
-    [workExperience, workSkillClass]
+    [workExperience]
   );
 
   const educationTimelineItems = useMemo(() =>
@@ -185,7 +187,7 @@ export function ExperienceApp() {
       dotColor: 'bg-green-500',
       skillColorClass: educationSkillClass
     })),
-    [education, educationSkillClass]
+    [education]
   );
 
   return (

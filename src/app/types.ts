@@ -8,6 +8,7 @@ export interface App {
 export interface Task {
   appId: string;
   timestamp: number;
+  paused: boolean;
 }
 
 export interface OSState {
@@ -20,6 +21,8 @@ export type OSAction =
   | { type: 'OPEN_APP'; payload: string }
   | { type: 'CLOSE_APP'; payload: string }
   | { type: 'SWITCH_TO_APP'; payload: string }
+  | { type: 'PAUSE_APP'; payload: string }
+  | { type: 'RESUME_APP'; payload: string }
   | { type: 'TOGGLE_QUICK_SETTINGS' }
   | { type: 'OPEN_QUICK_SETTINGS' }
   | { type: 'CLOSE_QUICK_SETTINGS' }
