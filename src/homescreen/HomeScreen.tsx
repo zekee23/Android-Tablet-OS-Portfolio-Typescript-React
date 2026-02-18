@@ -1,6 +1,7 @@
 import { AppGrid } from './AppGrid';
 import { useOS } from '../hooks/useOS';
 import { LiveWallpaper } from '../styles/Livewallpaper';
+import { NotesWidget } from '../apps/NotesWidget';
 import type { App } from '../app/types';
 import { useState, useEffect } from 'react';
 
@@ -77,6 +78,11 @@ export function HomeScreen({ apps }: HomeScreenProps) {
           <p className="text-sm text-white/70 text-center drop-shadow-md">Drag down from the status bar</p>
           <p className="text-xs text-white/50 text-center drop-shadow-md">to open Quick Settings</p>
         </div>
+      </div>
+      
+      {/* Notes Widget - Fixed position on right side (desktop only) */}
+      <div className="hidden md:block select-text pointer-events-auto relative z-20">
+        <NotesWidget />
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ const ContactApp = lazy(() => import('../apps/ContactApp').then(module => ({ def
 const GalleryApp = lazy(() => import('../apps/GalleryApp').then(module => ({ default: module.GalleryApp })));
 const ExperienceApp = lazy(() => import('../apps/ExperienceApp').then(module => ({ default: module.ExperienceApp })));
 const TechApp = lazy(() => import('../apps/TechApp').then(module => ({ default: module.TechAppOptimized })));
+const NotesWidget = lazy(() => import('../apps/NotesWidget').then(module => ({ default: module.NotesWidget })));
 
 // Static apps array - no hooks needed at module level
 export const availableApps: App[] = [
@@ -46,6 +47,12 @@ export const availableApps: App[] = [
     name: 'TechStack',
     icon: '💻',
     component: TechApp,
+  },
+  {
+    id: 'notes',
+    name: 'Notes',
+    icon: '📝',
+    component: NotesWidget,
   }
 ];
 
