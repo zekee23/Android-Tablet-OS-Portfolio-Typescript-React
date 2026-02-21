@@ -13,7 +13,7 @@ interface Particle {
 export function LiveWallpaper() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
-  const touchesRef = useRef<Touch[]>([]);
+  const rafRef = useRef<number>(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -30,113 +30,115 @@ export function LiveWallpaper() {
     updateCanvasSize();
     window.addEventListener('resize', updateCanvasSize);
 
-    // Initialize particles
+    // Varied, lighter hues across the spectrum — not just dark blue
+    const hues = [160, 190, 210, 260, 300, 330];
+    const getColor = () => {
+      const h = hues[Math.floor(Math.random() * hues.length)];
+      const l = 70 + Math.random() * 15; // lighter: 70–85%
+      return `hsl(${h}, 90%, ${l}%)`;
+    };
+
     const initParticles = () => {
-      const particleCount = Math.min(150, Math.floor((canvas.width * canvas.height) / 15000));
-      particlesRef.current = [];
-      
-      for (let i = 0; i < particleCount; i++) {
-        particlesRef.current.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 1.5,
-          vy: (Math.random() - 0.5) * 1.5,
-          radius: Math.random() * 2 + 1,
-          color: `hsl(${200 + Math.random() * 40}, 85%, 65%)`,
-          fade: 1
-        });
-      }
+      const particleCount = Math.min(120, Math.floor((canvas.width * canvas.height) / 18000));
+      particlesRef.current = Array.from({ length: particleCount }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 1.2,
+        vy: (Math.random() - 0.5) * 1.2,
+        radius: Math.random() * 2 + 1,
+        color: getColor(),
+        fade: 1,
+      }));
     };
     initParticles();
 
-    // Mouse/Touch interaction
     const handleInteraction = (x: number, y: number) => {
-      particlesRef.current.forEach(particle => {
-        const dx = x - particle.x;
-        const dy = y - particle.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        if (distance < 100) {
-          const force = (100 - distance) / 100;
-          particle.vx -= (dx / distance) * force * 2;
-          particle.vy -= (dy / distance) * force * 2;
+      particlesRef.current.forEach(p => {
+        const dx = x - p.x;
+        const dy = y - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 100 && dist > 0) {
+          const force = (100 - dist) / 100;
+          p.vx -= (dx / dist) * force * 2;
+          p.vy -= (dy / dist) * force * 2;
         }
       });
     };
 
-    const handleMouseMove = (e: MouseEvent) => {
-      handleInteraction(e.clientX, e.clientY);
-    };
-
+    const handleMouseMove = (e: MouseEvent) => handleInteraction(e.clientX, e.clientY);
     const handleTouchMove = (e: TouchEvent) => {
       e.preventDefault();
-      touchesRef.current = Array.from(e.touches);
-      touchesRef.current.forEach(touch => {
-        handleInteraction(touch.clientX, touch.clientY);
-      });
+      Array.from(e.touches).forEach(t => handleInteraction(t.clientX, t.clientY));
     };
 
     canvas.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('touchmove', handleTouchMove);
+    canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
 
-    // Animation loop
     const animate = () => {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.02)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Full clear every frame — eliminates ghost trails and gray smearing
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      particlesRef.current.forEach((particle, index) => {
+      const particles = particlesRef.current;
+
+      particles.forEach((p, i) => {
         // Update position
-        particle.x += particle.vx;
-        particle.y += particle.vy;
+        p.x += p.vx;
+        p.y += p.vy;
 
-        // Apply minimal friction and add small random force
-        particle.vx *= 0.999;
-        particle.vy *= 0.999;
-        particle.vx += (Math.random() - 0.5) * 0.01;
-        particle.vy += (Math.random() - 0.5) * 0.01;
+        // Friction + tiny drift
+        p.vx *= 0.999;
+        p.vy *= 0.999;
+        p.vx += (Math.random() - 0.5) * 0.01;
+        p.vy += (Math.random() - 0.5) * 0.01;
 
         // Bounce off walls
-        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
-        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
-        // Draw particle with glow effect
+        // Soft glow halo
         ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.radius * 2, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color;
-        ctx.globalAlpha = particle.fade * 0.3;
+        ctx.arc(p.x, p.y, p.radius * 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = 0.18;
         ctx.fill();
-        
+
+        // Core dot
         ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color;
-        ctx.globalAlpha = particle.fade;
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = 0.9;
         ctx.fill();
+
         ctx.globalAlpha = 1;
 
         // Connect nearby particles
-        particlesRef.current.slice(index + 1).forEach(otherParticle => {
-          const dx = particle.x - otherParticle.x;
-          const dy = particle.y - otherParticle.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 80) {
+        // Cheap bounding-box check before sqrt for perf
+        for (let j = i + 1; j < particles.length; j++) {
+          const o = particles[j];
+          const dx = p.x - o.x;
+          const dy = p.y - o.y;
+          if (Math.abs(dx) > 85 || Math.abs(dy) > 85) continue;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 85) {
             ctx.beginPath();
-            ctx.moveTo(particle.x, particle.y);
-            ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.strokeStyle = particle.color;
-            ctx.globalAlpha = (1 - distance / 80) * 0.5;
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(o.x, o.y);
+            ctx.strokeStyle = p.color;
+            ctx.lineWidth = 0.7;
+            ctx.globalAlpha = (1 - dist / 85) * 0.45;
             ctx.stroke();
             ctx.globalAlpha = 1;
           }
-        });
+        }
       });
 
-      requestAnimationFrame(animate);
+      rafRef.current = requestAnimationFrame(animate);
     };
 
     animate();
 
     return () => {
+      cancelAnimationFrame(rafRef.current);
       window.removeEventListener('resize', updateCanvasSize);
       canvas.removeEventListener('mousemove', handleMouseMove);
       canvas.removeEventListener('touchmove', handleTouchMove);

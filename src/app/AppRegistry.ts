@@ -1,14 +1,15 @@
 import { lazy } from 'react';
 import type { App } from './types';
 
-// Lazy load all app components for code splitting
-const AboutApp = lazy(() => import('../apps/AboutApp').then(module => ({ default: module.AboutApp })));
-const ProjectsApp = lazy(() => import('../apps/ProjectsApp').then(module => ({ default: module.ProjectsApp })));
-const ContactApp = lazy(() => import('../apps/ContactApp').then(module => ({ default: module.ContactApp })));
+// Import critical apps directly for instant loading
+import { AboutApp } from '../apps/AboutApp';
+import { ProjectsApp } from '../apps/ProjectsApp';
+import { ContactApp } from '../apps/ContactApp';
+
+// Lazy load less critical apps for code splitting
 const GalleryApp = lazy(() => import('../apps/GalleryApp').then(module => ({ default: module.GalleryApp })));
 const ExperienceApp = lazy(() => import('../apps/ExperienceApp').then(module => ({ default: module.ExperienceApp })));
 const TechApp = lazy(() => import('../apps/TechApp').then(module => ({ default: module.TechAppOptimized })));
-const NotesWidget = lazy(() => import('../apps/NotesWidget').then(module => ({ default: module.NotesWidget })));
 
 // Static apps array - no hooks needed at module level
 export const availableApps: App[] = [
@@ -47,12 +48,6 @@ export const availableApps: App[] = [
     name: 'TechStack',
     icon: '💻',
     component: TechApp,
-  },
-  {
-    id: 'notes',
-    name: 'Notes',
-    icon: '📝',
-    component: NotesWidget,
   }
 ];
 

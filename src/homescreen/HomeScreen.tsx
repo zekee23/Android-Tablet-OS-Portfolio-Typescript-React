@@ -1,6 +1,7 @@
 import { AppGrid } from './AppGrid';
 import { useOS } from '../hooks/useOS';
 import { LiveWallpaper } from '../styles/Livewallpaper';
+import { NewsWidget } from '../apps/NewsWidget';
 import { NotesWidget } from '../apps/NotesWidget';
 import type { App } from '../app/types';
 import { useState, useEffect } from 'react';
@@ -67,7 +68,7 @@ export function HomeScreen({ apps }: HomeScreenProps) {
             {currentDate}
           </p>
           <p className="text-l text-white/70 font-light drop-shadow-md">Manila, Philippines</p>
-          <p className="text-sm text-white/80 font-bold drop shadow-md">Philippines (GMT+8)</p>
+          <p className="text-sm text-white/80 font-bold drop-shadow-md">Philippines (GMT+8)</p>
         </div>
         
         <div className="w-full max-w-md pt-7">
@@ -80,8 +81,13 @@ export function HomeScreen({ apps }: HomeScreenProps) {
         </div>
       </div>
       
+      {/* News Widget - Fixed position on left side (desktop only) */}
+      <div className="hidden min-[1120px]:block select-none pointer-events-auto relative z-20">
+        <NewsWidget />
+      </div>
+      
       {/* Notes Widget - Fixed position on right side (desktop only) */}
-      <div className="hidden md:block select-text pointer-events-auto relative z-20">
+      <div className="hidden min-[1120px]:block select-text pointer-events-auto relative z-20">
         <NotesWidget />
       </div>
     </div>

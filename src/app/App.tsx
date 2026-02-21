@@ -6,7 +6,10 @@ import { QuickSettings } from '../system/QuickSettings';
 import { HomeScreen } from '../homescreen/HomeScreen';
 import { availableApps, getAppComponent } from './AppRegistry';
 import { useOS } from '../hooks/useOS';
-import { AppLoader, AppErrorBoundary } from '../components/AppLoader';
+import { AppErrorBoundary } from '../components/AppLoader';
+
+// Memoize availableApps to prevent unnecessary re-renders
+const memoizedAvailableApps = availableApps;
 
 function OSContent() {
   const { state } = useOS();
@@ -37,16 +40,19 @@ function OSContent() {
 
   return (
     <div className="relative min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Main Content */}
-      <AppErrorBoundary>
-        <Suspense fallback={<AppLoader />}>
-          {ActiveAppComponent ? (
-            <ActiveAppComponent />
-          ) : (
-            <HomeScreen apps={availableApps} />
-          )}
-        </Suspense>
-      </AppErrorBoundary>
+      {/* Home Screen - Always mounted */}
+      <HomeScreen apps={memoizedAvailableApps} />
+      
+      {/* App Overlay - Shows on top of homescreen when app is open */}
+      {ActiveAppComponent && (
+        <div className="absolute inset-0 z-30 bg-gray-50 dark:bg-gray-900">
+          <AppErrorBoundary>
+            <Suspense fallback={null}>
+              <ActiveAppComponent />
+            </Suspense>
+          </AppErrorBoundary>
+        </div>
+      )}
       
       {/* Navigation Bar - Always mounted */}
       <NavigationBar />
@@ -54,7 +60,7 @@ function OSContent() {
       {/* Overlays */}
       <QuickSettings />
       <TaskSwitcher 
-        apps={availableApps}
+        apps={memoizedAvailableApps}
         isOpen={taskSwitcherOpen}
         onClose={handleTaskSwitcherToggle}
       />
