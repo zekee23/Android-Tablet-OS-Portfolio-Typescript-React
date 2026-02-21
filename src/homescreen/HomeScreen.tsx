@@ -51,7 +51,7 @@ export function HomeScreen({ apps }: HomeScreenProps) {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 overflow-hidden select-none">
+    <div className="relative h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 overflow-hidden select-none">
       {/* Live Interactive Wallpaper */}
       <LiveWallpaper />
       
@@ -59,7 +59,7 @@ export function HomeScreen({ apps }: HomeScreenProps) {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-900/30 pointer-events-none"></div>
       
       {/* Home Screen Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 pt-16 pb-16">
+      <div className="relative z-10 flex flex-col items-center justify-center h-screen px-6 pt-16 pb-16">
         <div className="text-center text-white mb-12">
           <h1 className="text-6xl font-extralight mb-2 drop-shadow-lg" style={{ fontDisplay: 'swap' } as React.CSSProperties}>
             {currentTime}

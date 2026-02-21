@@ -61,10 +61,16 @@ function loadNotes(): Note[] {
   return [
     {
       id: '1',
-      content: 'Welcome! Click here to start writing.',
+      content: 'Welcome! Click here to start writing.<br><br>You can also click the color button to change note color.<br><br>You can also delete and create new notes. It is saved in localstorage.',
       timestamp: new Date().toISOString(),
       color: 'amber',
     },
+    {
+      id: '2',
+      content: '<strong><em>Built this portfolio to showcase my interest in web & android development.</em></strong><br><br>Inspired by:<br><ul><li>Android Notes</li><li>Old Android OS</li><li>React/TS</li></ul><br>Message me for any issues!',
+      timestamp: "January 2025",
+      color: 'emerald',
+    }
   ];
 }
 
@@ -527,8 +533,7 @@ export function NotesWidget() {
 
   return (
     <div
-      className="fixed right-4 top-20 w-72 space-y-3 overflow-y-auto pb-4"
-      style={{ maxHeight: 'calc(100vh - 90px)' }}
+      className="fixed right-4 top-12 w-72 space-y-3 pb-4 overflow-y-hidden"
     >
       {notes.map((note, i) => (
         <NoteCard

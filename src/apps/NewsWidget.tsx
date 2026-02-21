@@ -97,7 +97,7 @@ export function NewsWidget() {
 
   if (loading) {
     return (
-      <div className="fixed left-8 h-20top-20 w-80 bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-2xl">
+      <div className="fixed left-8 h-20 top-16 w-80 bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-2xl">
         <div className="flex items-center gap-2 mb-4">
           <Newspaper className="w-5 h-5 text-white/80" />
           <h3 className="text-white font-semibold">Latest News in US</h3>
@@ -116,7 +116,7 @@ export function NewsWidget() {
 
   if (error) {
     return (
-      <div className="fixed left-4 top-20 w-80 bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-2xl">
+      <div className="fixed left-4 top-16 w-80 bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-2xl">
         <div className="flex items-center gap-2 mb-2">
           <Newspaper className="w-5 h-5 text-white/80" />
           <h3 className="text-white font-semibold">Latest News in US</h3>
@@ -136,7 +136,7 @@ export function NewsWidget() {
   }
 
   return (
-    <div className="fixed left-4 top-20 w-80 bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-2xl select-none">
+    <div className="fixed left-4 top-16 w-80 bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-2xl select-none">
       <div className="flex items-center gap-2 mb-4">
         <Newspaper className="w-5 h-5 text-white/80" />
         <h3 className="text-white font-semibold">Latest News in US</h3>
